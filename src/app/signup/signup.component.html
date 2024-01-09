@@ -1,0 +1,154 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row fxLayout="row">
+    <span>Đăng ký</span>
+    <span class="spacer"></span>
+    <button class="mat-dialog-close" mat-icon-button mat-dialog-close>
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-dialog-content class="mat-typography">
+  <form [formGroup]="signupForm">
+    <div fxFlex fxLayout="column">
+      <mat-form-field appearance="standard" fxFlex>
+        <mat-label>Họ tên</mat-label>
+        <input matInput formControlName="name" required />
+        <mat-error
+          *ngIf="
+            signupForm.controls.name.touched && signupForm.controls.name.invalid
+          "
+        >
+          <span *ngIf="signupForm.controls.name.errors.required"
+            >Hãy nhập họ tên.</span
+          >
+          <span *ngIf="signupForm.controls.name.errors.pattern"
+            >Họ tên không hợp lệ</span
+          >
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="standard" fxFlex>
+        <mat-label>Số điện thoại</mat-label>
+        <input matInput formControlName="contacNumber" required />
+        <mat-error
+          *ngIf="
+            signupForm.controls.contacNumber.touched &&
+            signupForm.controls.contacNumber.invalid
+          "
+        >
+          <span *ngIf="signupForm.controls.contacNumber.errors.required"
+            >Hãy nhập số điện thoại.</span
+          >
+          <span *ngIf="signupForm.controls.contacNumber.errors.pattern"
+            >Số điện thoại không hợp lệ</span
+          >
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="standard" fxFlex>
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" required />
+        <mat-error
+          *ngIf="
+            signupForm.controls.email.touched &&
+            signupForm.controls.email.invalid
+          "
+        >
+          <span *ngIf="signupForm.controls.email.errors.required"
+            >Hãy nhập email.</span
+          >
+          <span *ngIf="signupForm.controls.email.errors.pattern"
+            >Email không hợp lệ</span
+          >
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="standard" fxFlex>
+        <mat-label>Mật khẩu</mat-label>
+        <input
+          matInput
+          formControlName="password"
+          type="password"
+          required
+          [type]="password ? 'password' : 'text'"
+        />
+        <button
+          type="button"
+          mat-icon-button
+          matSuffix
+          (click)="password = !password"
+          [attr.aria-label]="password ? 'Hide password' : 'Show password'"
+          [attr.aria-pressed]="password"
+        >
+          <mat-icon>{{ password ? "visibility_off" : "visibility" }}</mat-icon>
+        </button>
+        <mat-error
+          *ngIf="
+            signupForm.controls.password.touched &&
+            signupForm.controls.password.invalid
+          "
+        >
+          <span *ngIf="signupForm.controls.password.errors.required"
+            >Hãy nhập mật khẩu.</span
+          >
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="standard" fxFlex>
+        <mat-label>Nhập lại mật khẩu</mat-label>
+        <input
+          matInput
+          formControlName="confirmPassword"
+          type="password"
+          required
+          [type]="confirmPassword ? 'password' : 'text'"
+        />
+        <button
+          type="button"
+          mat-icon-button
+          matSuffix
+          (click)="confirmPassword = !confirmPassword"
+          [attr.aria-label]="password ? 'Hide password' : 'Show password'"
+          [attr.aria-pressed]="password"
+        >
+          <mat-icon>{{
+            confirmPassword ? "visibility_off" : "visibility"
+          }}</mat-icon>
+        </button>
+        <mat-error
+          *ngIf="
+            signupForm.controls.confirmPassword.touched &&
+            signupForm.controls.confirmPassword.invalid
+          "
+        >
+          <span *ngIf="signupForm.controls.confirmPassword.errors.required"
+            >Hãy nhập mật khẩu.</span
+          >
+        </mat-error>
+        <mat-hint
+          *ngIf="
+            validateSubmit() && !signupForm.controls.confirmPassword.invalid
+          "
+        >
+          Mật khẩu và nhập lại mật khẩu không trùng khớp!
+        </mat-hint>
+      </mat-form-field>
+    </div>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button
+    mat-raised-button
+    color="primary"
+    type="submit"
+    (click)="handleSubmit()"
+    [disabled]="validateSubmit() || !(signupForm.valid && signupForm.dirty)"
+  >
+    <mat-icon>save</mat-icon> Đăng ký
+  </button>
+  <button mat-raised-button color="warn" mat-dialog-close>
+    <mat-icon>cancel</mat-icon> Close
+  </button>
+</mat-dialog-actions>
