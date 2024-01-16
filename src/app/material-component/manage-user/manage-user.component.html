@@ -1,0 +1,50 @@
+<mat-card>
+  <b><span> Danh sách người dùng</span></b>
+</mat-card>
+
+<mat-card>
+  <mat-form-field appearance="standard">
+    <mat-label>
+      <mat-icon>filter_alt</mat-icon>
+      Lọc người dùng
+    </mat-label>
+    <input matInput (keyup)="applyFilter($event)" #input />
+  </mat-form-field>
+</mat-card>
+<hr />
+<div class="responsive_table">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Họ tên</th>
+      <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef>Email</th>
+      <td mat-cell *matCellDef="let element">{{ element.email }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="contactNumber">
+      <th mat-header-cell *matHeaderCellDef>Số điện thoại</th>
+      <td mat-cell *matCellDef="let element">{{ element.contacNumber }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef>Trạng thái</th>
+      <td mat-cell *matCellDef="let element">{{ element.status }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="edit">
+      <th mat-header-cell *matHeaderCellDef>Hành động</th>
+      <td mat-cell *matCellDef="let element" class="action-link">
+        <mat-slide-toggle
+          (change)="onChange($event.checked, element.id)"
+          matTooltip="Kích hoạt hoặc hủy kích hoạt người dùng"
+          [checked]="element.status"
+        ></mat-slide-toggle>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>
