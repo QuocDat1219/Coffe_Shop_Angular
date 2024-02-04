@@ -1,42 +1,42 @@
 import { Component, EventEmitter, Inject, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
-import { CategoryService } from 'src/app/services/category.service';
+import { BlogCategoryService } from 'src/app/services/blog-category.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { GlobalConstants } from 'src/app/shared/global-constants';
 
 @Component({
-  selector: 'app-category',
-  templateUrl: './category.component.html',
-  styleUrls: ['./category.component.scss']
+  selector: 'app-blog-category',
+  templateUrl: './blog-category.component.html',
+  styleUrls: ['./blog-category.component.scss']
 })
-export class CategoryComponent implements OnInit {
+export class BlogCategoryComponent implements OnInit {
 
-  onAddCategory = new EventEmitter();
-  onEditCategory = new EventEmitter();
-  categoryForm:any = FormGroup;
-  dialogAction:any = "Add";
-  action:any = "Add";
-
+  onAddBlogCategory = new EventEmitter();
+  onEditBlogCategory = new EventEmitter();
+  blogCategoryForm:any = FormGroup;
+  dialogAction:any="Add";
+  action:any="Add";
   responseMessage:any;
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public dialogData:any,
-    private FormBuilder:FormBuilder,
-    private categoryService:CategoryService,
-    public dialog:MatDialogRef<CategoryComponent>,
+    private formBuilder:FormBuilder,
+    public dialog:MatDialogRef<BlogCategoryComponent>,
     private snackbarService:SnackbarService,
-    private ngxService:NgxUiLoaderService
+    private ngxService:NgxUiLoaderService,
+    private blogCategoryService:BlogCategoryService
   ) { }
 
   ngOnInit(): void {
-    this.categoryForm = this.FormBuilder.group({
-        name:[null,[Validators.required]]
+    this.blogCategoryForm = this.formBuilder.group({
+        name: [null,[Validators.required]]
     });
     if(this.dialogData.action === "Edit"){
       this.dialogAction = "Edit";
       this.action = "Update";
-      this.categoryForm.patchValue(this.dialogData.data);
+      this.blogCategoryForm.patchValue(this.dialogData.data);
     }
   }
 
@@ -48,15 +48,14 @@ export class CategoryComponent implements OnInit {
     }
   }
 
-  add(){
-    
-    var formData = this.categoryForm.value;
+  add() {
+    var formData = this.blogCategoryForm.value;
     var data = {
-      name: formData.name,
+      name : formData.name,
     }
-    this.categoryService.add(data).subscribe((response:any) =>{
+    this.blogCategoryService.add(data).subscribe((response:any)=>{
       this.dialog.close();
-      this.onAddCategory.emit();
+      this.onAddBlogCategory.emit();
       this.responseMessage = response.message;
       this.snackbarService.openSnackBar(this.responseMessage,"success");
     },(error)=>{
@@ -72,15 +71,15 @@ export class CategoryComponent implements OnInit {
     })
   }
 
-  edit(){
-    var formData = this.categoryForm.value;
+  edit() {
+    var formData = this.blogCategoryForm.value;
     var data = {
-      id:this.dialogData.data.id,
-      name: formData.name,
+      id: this.dialogData.data.id,
+      name : formData.name,
     }
-    this.categoryService.update(data).subscribe((response:any) =>{
+    this.blogCategoryService.update(data).subscribe((response:any)=>{
       this.dialog.close();
-      this.onAddCategory.emit();
+      this.onEditBlogCategory.emit();
       this.responseMessage = response.message;
       this.snackbarService.openSnackBar(this.responseMessage,"success");
     },(error)=>{

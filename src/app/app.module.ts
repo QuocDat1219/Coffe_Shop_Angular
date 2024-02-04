@@ -19,6 +19,8 @@ import { NgxUiLoaderConfig, SPINNER,NgxUiLoaderModule } from 'ngx-ui-loader';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { LoginComponent } from './login/login.component';
 import { TokenInterceptorInterceptor } from './services/token-interceptor.interceptor';
+import { MatCardModule } from '@angular/material/card';
+import { AngularEditorModule } from '@kolkov/angular-editor';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   text:"Loading...",
@@ -53,6 +55,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     FlexLayoutModule,
     SharedModule,
     HttpClientModule,
+    MatCardModule,
+    AngularEditorModule,
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig)
   ],
   providers: [HttpClientModule,{provide:HTTP_INTERCEPTORS, useClass:TokenInterceptorInterceptor,multi:true}],

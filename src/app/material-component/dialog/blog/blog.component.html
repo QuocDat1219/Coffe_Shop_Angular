@@ -1,0 +1,40 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row fxLayout="row">
+    <span>{{ dialogData.action }} tin tức</span>
+    <span class="spacer"></span>
+    <button class="mat-dialog-close" mat-icon-button mat-dialog-close>
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-dialog-content class="mat-typography">
+  <form [formGroup]="blogForm">
+    <div fxFlex fxLayout="column">
+      <mat-form-field appearance="standard" fxFlex>
+        <mat-form-field appearance="standard" fxFlex>
+          <mat-label>Danh mục tin tức</mat-label>
+          <mat-select formControlName="blogCategoryId">
+            <mat-option
+              *ngFor="let blogCategory of blogCategories"
+              [value]="blogCategory.id"
+              >{{ blogCategory.name }}</mat-option
+            >
+          </mat-select>
+        </mat-form-field>
+
+        <mat-label>Tiêu đề tin tức</mat-label>
+        <input matInput formControlName="title" required />
+        <mat-error
+          *ngIf="
+            blogForm.controls.title.touched && blogForm.controls.title.invalid
+          "
+        >
+          <span *ngIf="blogForm.controls.title.errors.required"
+            >Hãy nhập tiêu đề tin tức</span
+          >
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </form>
+</mat-dialog-content>

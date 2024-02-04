@@ -14,6 +14,8 @@ const MENUITEM = [
     {state:'product', name:'Sản phẩm',type:'link',icon:'inventory_2',role:'admin'},
     {state:'order', name:'Mua hàng',type:'link',icon:'shopping_cart',role:''},
     {state:'bill', name:'Hóa đơn',type:'link',icon:'backup_table',role:''},
+    {state:'blog-category', name:'Danh mục tin tức',type:'link',icon:'list_alt',role:'admin'},
+    {state:'blog', name:'Bài viết',type:'link',icon:'message',role:''},
     {state:'user', name:'Người dùng',type:'link',icon:'people',role:'admin'},
 
 ]
